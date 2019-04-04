@@ -7,34 +7,51 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ContactManager {
-    public static void main(String[] args) {
 
+    public static void displayInterface() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1. View contacts");
+        System.out.println("2. Add a new contact");
+        System.out.println("3. Search a contact by name or phone number");
+        System.out.println("4. Delete an existing contact");
+        System.out.println("5. Exit");
+        System.out.println("Enter a number option:");
+        String selection = scanner.nextLine();
+
+        if (selection.startsWith("1")) {
+            viewContacts();
+        } else if (selection.startsWith("2")) {
+            createContact();
+        } else if (selection.startsWith("3")) {
+            searchContact();
+        } else if (selection.startsWith("4")) {
+            deleteContact();
+        }
+        pickAnotherOption();
+    }
+
+    public static void pickAnotherOption(){
         String userPickAnotherOption;
-        do {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("1. View contacts");
-            System.out.println("2. Add a new contact");
-            System.out.println("3. Search a contact by name or phone number");
-            System.out.println("4. Delete an existing contact");
-            System.out.println("5. Exit");
-            System.out.println("Enter a number option:");
-            String selection = scanner.nextLine();
+        Scanner scanner = new Scanner(System.in);
 
-            if (selection.startsWith("1")) {
-                viewContacts();
-            } else if (selection.startsWith("2")) {
-                createContact();
-            } else if (selection.startsWith("3")) {
-                searchContact();
-            } else if (selection.startsWith("4")) {
-                deleteContact();
-            }
+        System.out.println("\nPick another option? yes | no");
+        userPickAnotherOption = scanner.nextLine();
 
-            System.out.println("\nPick another option? yes | no");
-            userPickAnotherOption = scanner.nextLine();
+        if (userPickAnotherOption.equalsIgnoreCase("yes") || userPickAnotherOption.equalsIgnoreCase("y")) {
+            displayInterface();
+        }
+        if (userPickAnotherOption.equalsIgnoreCase("no") || userPickAnotherOption.equalsIgnoreCase("n")) {
+            System.out.println("Goodbye!");
+        }
+        else {
+            pickAnotherOption();
+        }
 
-        }while( (!userPickAnotherOption.equalsIgnoreCase("no")) &&  (userPickAnotherOption.startsWith("y") || userPickAnotherOption.startsWith("Y")));
+    }
 
+
+    public static void main(String[] args) {
+        displayInterface();
     }
 
     public static void deleteContact(){
