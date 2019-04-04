@@ -33,7 +33,8 @@ public class ContactManager {
             System.out.println("\nPick another option? yes | no");
             userPickAnotherOption = scanner.nextLine();
 
-        }while(userPickAnotherOption.equalsIgnoreCase("yes"));
+        }while( (!userPickAnotherOption.equalsIgnoreCase("no")) &&  (userPickAnotherOption.startsWith("y") || userPickAnotherOption.startsWith("Y")));
+
     }
 
     public static void deleteContact(){
@@ -50,27 +51,31 @@ public class ContactManager {
 
         try{
             List<String> contacts = Files.readAllLines(dataFile);
-//            List<String> updatedContacts = new ArrayList<>();
-//            updatedContacts = contacts; // Makes an exact replica of our current contacts list
-            for (String contact : contacts) {
-                if(contact.contains(nameToDelete)){
+            Iterator<String> iter = contacts.iterator();
+
+            while (iter.hasNext()) {
+                String string = iter.next();
+
+                if(string.contains(nameToDelete)) {
                     System.out.println("Are you sure you want to delete this contact? yes | no");
                     String confirmDelete = scanner.nextLine();
+
                     if (confirmDelete.equalsIgnoreCase("yes")) {
-                        contacts.remove(contact);
-                        Files.write(
-                                Paths.get("data", "info.txt"), contacts);
-                        System.out.println(nameToDelete + " has been removed from your contacts.");
-                        System.out.println("Keep going! You are one step closer to having no friends at all!");
-                    } else {
-                        System.out.println("No contacts were deleted. \n");
+                        iter.remove();
                     }
                 }
             }
+
+            Files.write(
+                    Paths.get("data", "info.txt"), contacts);
+            System.out.println(nameToDelete + " has been removed from your contacts.");
+            System.out.println("Keep going! You are one step closer to having no friends at all!");
+
+
         } catch(IOException ioe) {
             System.out.println(ioe);
         } catch(ConcurrentModificationException ccme) {
-            System.out.println();
+            System.out.println("still catching");
         }
 
     }
