@@ -88,7 +88,6 @@ public class ContactManager {
             System.out.println(nameToDelete + " has been removed from your contacts.");
             System.out.println("Keep going! You are one step closer to having no friends at all!");
 
-
         } catch(IOException ioe) {
             System.out.println(ioe);
         } catch(ConcurrentModificationException ccme) {
@@ -145,13 +144,13 @@ public class ContactManager {
         System.out.println("Congrats! You finally found a friend. " + addContact +
                 " has been added to your contact list.");
 
+        Contact newContact = new Contact(addContact, addNumber);
 
         String directory = "./data";
         String filename = "info.txt";
 
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
-
 
         try {
             if (Files.notExists(dataDirectory)) {
@@ -164,17 +163,13 @@ public class ContactManager {
 
             Files.write(
                     Paths.get("data", "info.txt"),
-                    Arrays.asList("Name: " + addContact + " Phone #: " + addNumber),
+                    Arrays.asList("Name: " + newContact.getName() + " Phone #: " + newContact.getPhoneNum()),
                     StandardOpenOption.APPEND
             );
-
 
         } catch (IOException ioe) {
             System.out.println("Something went wrong :(");
             System.out.println(ioe);
         }
-
     }
-
-
 }
