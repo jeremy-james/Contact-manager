@@ -1,4 +1,4 @@
-package src.ContactManagerPackage;
+package ContactManagerPackage;
 
 public class Contact {
     private String name;
